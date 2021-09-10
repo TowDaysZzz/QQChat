@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 
 import Beans.User;
 import Tools.Message;
@@ -23,7 +22,7 @@ public class ManageAcceptThread {
 	static int port;
 	static ServerSocket serverSocket;
 
-	static HashMap<Integer, Socket> accpets = new HashMap<>();
+	// static HashMap<Integer, Socket> accpets = new HashMap<>();
 
 	public ManageAcceptThread(int port) {
 		try {

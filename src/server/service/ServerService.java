@@ -27,7 +27,7 @@ public class ServerService {
 			String sql1 = "update user set state=? WHERE name=?";
 			userDao.update(sql1, 1, id);
 		}
-		System.out.println("个性签名：" + getUser.getSignature());
+		// System.out.println("个性签名：" + getUser.getSignature());
 		return getUser;
 	}
 

@@ -6,4 +6,5 @@ public class QqServerFrame {
 	public static void main(String[] args) {
 		new ManageAcceptThread(9999);
 	}
+	// @Test
 }

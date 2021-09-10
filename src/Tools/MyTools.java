@@ -2,6 +2,7 @@ package Tools;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -26,7 +27,9 @@ public class MyTools {
 	 */
 	public static ImageIcon getIcon(String path) {
 		try {
-			ImageIcon icon = new ImageIcon(ImageIO.read(MyTools.class.getResource(path)));
+			// ImageIcon icon = new
+			// ImageIcon(ImageIO.read(MyTools.class.getResource(path)));
+			ImageIcon icon = new ImageIcon(ImageIO.read(new File(path)));
 			return icon;
 		} catch (IOException e) {
 			System.out.println("图片：" + path + "不存在！");

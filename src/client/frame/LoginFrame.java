@@ -32,17 +32,22 @@ public class LoginFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		// MyTools.class.getResource(path);
+		// System.out.println(MyTools.class.getResource(path));
 		LoginFrame frame = new LoginFrame();
 		frame.setVisible(true);
 	}
 
 	public LoginFrame() {
 		setTitle("chat");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/client/img/QQ_64.png")));
+		System.out.println("path:" + LoginFrame.class.getResource("/"));
+		// System.out.println(PathClass.class.getResource("/"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("D:/aa/project/QQChat/src/client/img/QQ_64.png"));
+		// setIconImage(Toolkit.getDefaultToolkit().getImage("/client/img/QQ_64.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 448, 350);
 
-		contentPane = new MyJPanel("/client/img/register.jpg");
+		contentPane = new MyJPanel("D:/aa/project/QQChat/src/client/img/register.jpg");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -53,7 +58,7 @@ public class LoginFrame extends JFrame {
 		contentPane.add(UserPwd);
 
 		headImg = new JLabel("");
-		headImg.setIcon(new ImageIcon(LoginFrame.class.getResource("/client/img/head_boy_01_64.jpg")));
+		headImg.setIcon(new ImageIcon("/client/img/head_boy_01_64.jpg"));
 		headImg.setBounds(18, 127, 64, 64);
 		contentPane.add(headImg);
 
@@ -66,7 +71,7 @@ public class LoginFrame extends JFrame {
 		contentPane.add(checkBoxSelfLogin);
 
 		loginButton = new JLabel("");
-		loginButton.setIcon(new ImageIcon(LoginFrame.class.getResource("/client/img/button_login_1.png")));
+		loginButton.setIcon(new ImageIcon("D:/aa/project/QQChat/src/client/img/button_login_1.png"));
 		loginButton.setBounds(161, 240, 69, 22);
 		contentPane.add(loginButton);
 

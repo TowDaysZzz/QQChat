@@ -329,4 +329,10 @@ public class User implements Serializable {
 		this.headImg = headImg;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getName() + "---" + this.getPwd();
+	}
+
 }

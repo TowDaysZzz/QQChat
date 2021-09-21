@@ -28,7 +28,7 @@ public class ServerChannelManager {
 	}
 
 	/*
-	 * 添加指定用户到userchannels中
+	 * d 添加指定用户到userchannels中
 	 */
 	public void addUser(Channel channel, String user) {
 		Channel channel2 = userChannels.get(channel.id());
@@ -36,7 +36,8 @@ public class ServerChannelManager {
 			logger.info("[addUser][连接({})不存在]", channel.id());
 		}
 		channel.attr(CHANNEL_ATTR_KEY_USER).set(user);
-		userChannels.put(user, channel2);
+		logger.info("[addUser][连接({})添加成功]", user);
+		userChannels.put(user, channel);
 	}
 
 	public void remove(Channel channel) {
@@ -57,7 +58,7 @@ public class ServerChannelManager {
 	public void send(String user, MsgObject msgObject) {
 		Channel channel = userChannels.get(user);
 		if (channel == null) {
-			logger.error("[send][连接不存在]");
+			logger.error("[send][({})连接不存在]", user);
 			return;
 		}
 		if (!channel.isActive()) {

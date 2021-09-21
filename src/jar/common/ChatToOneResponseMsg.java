@@ -2,8 +2,8 @@ package jar.common;
 
 import Tools.MsgTypes;
 
-public class ChatToOneRequestMsg implements Message {
-	public static final String TYPE = MsgTypes.MESSAGE_PRIVATE_CHAT_REQUEST;
+public class ChatToOneResponseMsg implements Message {
+	public static final String TYPE = MsgTypes.MESSAGE_PRIVATE_CHAT_RESPONSE;
 	private String fromUser;
 	private String toUser;
 	private String msgid;

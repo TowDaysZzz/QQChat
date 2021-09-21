@@ -13,7 +13,7 @@ import jar.common.MsgObject;
 
 @Component
 
-public class ClientActionListener extends MouseAdapter {
+public class ClientLoginListener extends MouseAdapter {
 	// @Autowired
 	// private LoginFrame loginframe;
 	// public ClientActionListener() {

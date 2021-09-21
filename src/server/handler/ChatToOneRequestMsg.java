@@ -1,6 +1,7 @@
-package jar.common;
+package server.handler;
 
 import Tools.MsgTypes;
+import jar.common.Message;
 
 public class ChatToOneRequestMsg implements Message {
 	public static final String TYPE = MsgTypes.MESSAGE_PRIVATE_CHAT_REQUEST;

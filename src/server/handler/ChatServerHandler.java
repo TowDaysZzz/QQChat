@@ -110,13 +110,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 		String[] split = msg.split("#");
 		String flag = split[0];
 		switch (flag) {
-		case MsgTypes.MESSAGE_LOGIN_:
+		case MsgTypes.MESSAGE_LOGIN_REQUEST:
 			dealwithLogin(split, channel);
 			break;
 		case MsgTypes.MESSAGE_REGISTER_:
 			dealwithRegister(split, channel);
 			break;
-		case MsgTypes.MESSAGE_PRIVATE_CHAT:
+		case MsgTypes.MESSAGE_PRIVATE_CHAT_REQUEST:
 			dealwithPriChat(split);
 			break;
 		}

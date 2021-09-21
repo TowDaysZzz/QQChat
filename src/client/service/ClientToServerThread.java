@@ -65,7 +65,7 @@ public class ClientToServerThread extends Thread {
 		case MsgTypes.MESSAGE_FRIENG_LIST:
 			doFriendList(message);
 			break;
-		case MsgTypes.MESSAGE_PRIVATE_CHAT:
+		case MsgTypes.MESSAGE_PRIVATE_CHAT_REQUEST:
 			// 同时要创建一个chat：
 			if (!ManageFrame.get(userID).map.containsKey(send)) {
 				Chat chat = new Chat("1", 1111, userID, send);

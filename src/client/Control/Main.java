@@ -41,7 +41,7 @@ public class Main extends MainFrame {
 			Chat chat = new Chat("1", 9999, user, friendName);
 			// 发送消息告诉服务器
 			Message message = new Message();
-			message.setMsgType(MsgTypes.MESSAGE_PRIVATE_CHAT);
+			message.setMsgType(MsgTypes.MESSAGE_PRIVATE_CHAT_REQUEST);
 			message.setSender(user);
 			message.setGetter(friendName);
 

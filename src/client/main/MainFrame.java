@@ -1,11 +1,10 @@
-package client.frame;
+package client.main;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +23,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+@org.springframework.stereotype.Component
 public class MainFrame extends JFrame {
 	// 头像
 	public JLabel headImg;
@@ -58,12 +58,40 @@ public class MainFrame extends JFrame {
 	private JMenuItem menuItemSendFile;
 	private JMenuItem menuItemDeletUser;
 
+	// public MainFrame(String userName, String signate) {
+	// // TODO Auto-generated constructor stub
+	// this.userName.setText(userName);
+	// this.signate.setText(signate);
+	//
+	// }
+
 	/**
 	 * Create the frame.
 	 */
 	public static void main(String[] args) {
 		MainFrame MainJframe = new MainFrame();
 		MainJframe.setVisible(true);
+	}
+
+	public JLabel getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName.setText(userName);
+		;
+	}
+
+	public JLabel getSignate() {
+		return signate;
+	}
+
+	public void setSignate(String signate) {
+		this.signate.setText(signate);
+	}
+
+	public void startMainFrame() {
+		this.setVisible(true);
 	}
 
 	public MainFrame() {
@@ -132,36 +160,41 @@ public class MainFrame extends JFrame {
 		addPopup(tree, popupMenuFriendList);
 
 		menuItemSendInstantMessage = new JMenuItem("发送消息");
-		menuItemSendInstantMessage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				startChat(e);
-			}
-		});
+		/*
+		 * 开启监听器
+		 */
+		/*
+		 * menuItemSendInstantMessage.addActionListener(new ActionListener() {
+		 * public void actionPerformed(ActionEvent e) { startChat(e); } });
+		 */
 		menuItemSendInstantMessage.setIcon(new ImageIcon("D:/aa/project/QQChat/src/client/img/QQ_64.png"));
 		popupMenuFriendList.add(menuItemSendInstantMessage);
 
 		menuItemSendFile = new JMenuItem("文件发送");
-		menuItemSendFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				sendFile(e);
-			}
-		});
+		// menuItemSendFile.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// sendFile(e);
+		// }
+		// });
 		popupMenuFriendList.add(menuItemSendFile);
 
 		menuItemCheckFriendInfo = new JMenuItem("查看资料");
-		menuItemCheckFriendInfo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getFriendInfo(e);
-			}
-		});
+		/*
+		 * getFriendInfo
+		 */
+		// menuItemCheckFriendInfo.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// getFriendInfo(e);
+		// }
+		// });
 		popupMenuFriendList.add(menuItemCheckFriendInfo);
 
 		menuItemDeletUser = new JMenuItem("删除用户");
-		menuItemDeletUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deleteFriend(e);
-			}
-		});
+		// menuItemDeletUser.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// deleteFriend(e);
+		// }
+		// });
 		popupMenuFriendList.add(menuItemDeletUser);
 
 		groupChat = new JPanel();
@@ -169,19 +202,19 @@ public class MainFrame extends JFrame {
 				groupChat, null);
 
 		JButton grouChatRoom = new JButton("进入聊天室");
-		grouChatRoom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gotoChatRoom();
-			}
-		});
+		// grouChatRoom.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// gotoChatRoom();
+		// }
+		// });
 		grouChatRoom.setFont(new Font("微软雅黑", Font.PLAIN, 28));
 
 		JButton buildGroupChatRoom = new JButton("创建聊天室");
-		buildGroupChatRoom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buildNewChatRoom();
-			}
-		});
+		// buildGroupChatRoom.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// buildNewChatRoom();
+		// }
+		// });
 		buildGroupChatRoom.setFont(new Font("微软雅黑", Font.PLAIN, 28));
 		GroupLayout groupChat1 = new GroupLayout(groupChat);
 		groupChat1.setHorizontalGroup(groupChat1.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
@@ -230,12 +263,12 @@ public class MainFrame extends JFrame {
 		btnNewButton.setBounds(224, 73, 97, 23);
 		userinfomation.add(btnNewButton);
 		getContentPane().setLayout(groupLayout);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changeInfomation(e);
-			}
-		});
-		setVisible(true);
+		// btnNewButton.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// changeInfomation(e);
+		// }
+		// });
+		// setVisible(true);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

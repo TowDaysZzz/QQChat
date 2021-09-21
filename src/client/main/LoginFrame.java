@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 import client.Control.Register;
 import client.frame.MyJPanel;
-import client.msgHandler.ClientActionListener;
+import client.msgHandler.ClientLoginListener;
 
 @Component
 public class LoginFrame extends JFrame {
@@ -45,7 +45,7 @@ public class LoginFrame extends JFrame {
 	// System.out.println("loginframe ---static");
 	// }
 	@Autowired
-	private ClientActionListener actionListener;
+	private ClientLoginListener actionListener;
 
 	/**
 	 * Launch the application.

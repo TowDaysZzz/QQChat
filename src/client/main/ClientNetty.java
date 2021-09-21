@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import client.msgHandler.ClientActionListener;
+import client.msgHandler.ClientLoginListener;
 import client.msgHandler.ClientNettyInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -37,6 +37,9 @@ public class ClientNetty {
 	private ClientNettyInitializer clientNettyInitializer;
 	@Autowired
 	private LoginFrame loginFrame;
+	@Autowired
+	private ChatFrame chatFrame;
+
 	/**
 	 * 线程组，用于客户端对服务端的链接、数据读写
 	 */
@@ -46,7 +49,7 @@ public class ClientNetty {
 	 */
 	private volatile Channel channel;
 	@Autowired
-	private ClientActionListener actionListener;
+	private ClientLoginListener actionListener;
 
 	/**
 	 * 启动 Netty Client
@@ -54,6 +57,7 @@ public class ClientNetty {
 	// @PostConstruct
 	public void start() throws InterruptedException {
 		System.out.println("监听器" + actionListener);
+		chatFrame.initComponents();
 		// 创建 Bootstrap 对象，用于 Netty Client 启动
 		Bootstrap bootstrap = new Bootstrap();
 		// 设置 Bootstrap 的各种属性。

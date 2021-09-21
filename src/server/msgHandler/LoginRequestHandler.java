@@ -1,5 +1,7 @@
 package server.msgHandler;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,21 @@ public class LoginRequestHandler implements MessageHandler<LoginRequestMsg> {
 		// System.out.println("开始判断");
 		if (login != null) {
 			System.out.println("登陆成功！！！！！！！！！！");
+			/*
+			 * 添加到manage中去
+			 */
+			System.out.println("username:" + username);
+			manage.addUser(channel, username);
+			manage.sendLogin(channel, new MsgObject(LoginResponseMsg.getType(), msg));
+			ServerListMsg serverListMsg = new ServerListMsg();
+			serverListMsg.setToUser(username);
+			List<User> allUsers = ServerService.getAllUsers();
+			serverListMsg.setLists(allUsers);
+			MsgObject msgObject = new MsgObject(serverListMsg.getType(), serverListMsg);
+			manage.sendAll(msgObject);
 		}
-		manage.sendLogin(channel, new MsgObject(LoginResponseMsg.getType(), msg));
+
+		// 登陆成功
 
 	}
 

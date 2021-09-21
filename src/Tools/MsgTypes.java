@@ -9,7 +9,7 @@ package Tools;
  *
  */
 public interface MsgTypes {
-	String MESSAGE_LOGIN_ = "1";
+	String MESSAGE_LOGIN_REQUEST = "1";
 	String MESSAGE_LOGIN_SUCCESS = "2";
 	String MESSAGE_LOGIN_FAIL = "3";
 	String MESSAGE_COMMON_ = "4";
@@ -24,4 +24,7 @@ public interface MsgTypes {
 	String MESSAGE_PRIVATE_CHAT = "13";
 	String MESSAGE_QUN_CHAT = "14";
 	String MESSAGE_FRIENG_LIST = "15";
+	String MESSAGE_LOGIN_OUT = "16";
+	String MESSAGE_LOGIN_RESPONSE = "17";
+
 }

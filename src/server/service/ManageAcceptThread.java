@@ -58,7 +58,7 @@ public class ManageAcceptThread {
 			User user = inMsg.getUser();
 			Message outMsg = new Message();
 			// 如果是登陆
-			if (inMsg.getMsgType().equals(MsgTypes.MESSAGE_LOGIN_)) {
+			if (inMsg.getMsgType().equals(MsgTypes.MESSAGE_LOGIN_REQUEST)) {
 				User loginUser = ServerService.getLogin((user));
 				if (loginUser != null) {
 

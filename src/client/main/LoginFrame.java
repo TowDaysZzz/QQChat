@@ -1,4 +1,4 @@
-package client.frame;
+package client.main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,14 +11,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import client.Control.Register;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import client.Control.Register;
+import client.frame.MyJPanel;
+import client.msgHandler.ClientActionListener;
+
+@Component
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -33,18 +38,29 @@ public class LoginFrame extends JFrame {
 	public JLabel loginButton;
 	public JLabel registerButton;
 
+	// 获取用户名与密码
+	private String name;
+	private String password;
+	// static {
+	// System.out.println("loginframe ---static");
+	// }
+	@Autowired
+	private ClientActionListener actionListener;
+
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		// MyTools.class.getResource(path);
-		// System.out.println(MyTools.class.getResource(path));
-		LoginFrame frame = new LoginFrame();
-		frame.setVisible(true);
-	}
+	/*
+	 * public static void main(String[] args) { //
+	 * MyTools.class.getResource(path); //
+	 * System.out.println(MyTools.class.getResource(path)); LoginFrame frame =
+	 * new LoginFrame(); frame.setVisible(true); }
+	 */
 
 	public LoginFrame() {
-
+		// System.out.println("loginFrame---init");
+		// System.out.println("loginframe()..........");
+		// System.out.println("loginframe...........");
 		setTitle("chat");
 		System.out.println("path:" + LoginFrame.class.getResource("/"));
 		// System.out.println(PathClass.class.getResource("/"));
@@ -107,28 +123,12 @@ public class LoginFrame extends JFrame {
 		label.setBounds(100, 168, 58, 15);
 		contentPane.add(label);
 		this.setVisible(true);
-		addEvent();
-	}
+		// addEvent();
 
-	// 获取用户名与密码
-	private String name;
-	private String password;
-
-	public void login() {
-
-		// 获取用户名与密码
-		String name = textFieldUserName.getText();
-		String password = new String(UserPwd.getPassword());
-
-		if (name.equals("") || password.equals("")) {
-			JOptionPane.showMessageDialog(this, "用户名和密码不能为空！", "错误", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		System.out.println("name:" + name + "password:" + password);
 	}
 
 	public String getName() {
-		return name;
+		return textFieldUserName.getText();
 	}
 
 	public void setName(String name) {
@@ -136,35 +136,25 @@ public class LoginFrame extends JFrame {
 	}
 
 	public String getPassword() {
-		return password;
+		return new String(UserPwd.getPassword());
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	//
+	// @Test
+	// public void test() {
+	// AnnotationConfigApplicationContext atx = new
+	// AnnotationConfigApplicationContext(ClientNettyConfig.class);
+	// addEvent();
+	// }
 
-	private void addEvent() {
+	public void addEvent() {
 		// TODO Auto-generated method stub
-		loginButton.addMouseListener(new MouseAdapter() {
-			// 登录按钮的单击事件
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				login();
-			}
-		});
-		this.addMouseListener(new MouseAdapter() {
-			// 窗体的鼠标按下事件
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// mousePress(e);
-			}
-		});
-		this.addMouseMotionListener(new MouseAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// mouseDrag(e);
-			};
-		});
+		// System.out.println("监听器添加成功");
+		System.out.println(actionListener + "/////////");
+		loginButton.addMouseListener(actionListener);
 
 		registerButton.addMouseListener(new MouseAdapter() {
 			@Override

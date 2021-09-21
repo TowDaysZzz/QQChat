@@ -16,19 +16,27 @@ import server.dao.UserDao;
 public class ServerService {
 	static UserDao userDao = new UserDao();
 
-	public static User getLogin(User user) {
-		String id = user.getName();
-		String pwd = user.getPwd();
+	public static User getLogin(String name, String pwd) {
+
 		System.out.println("正在数据库检索...");
 		String sql = "select * from user where name=? and pwd=?";
-		User getUser = userDao.get(sql, User.class, id, pwd);
+		User getUser = userDao.get(sql, User.class, name, pwd);
+		// 更改用户状态
+
 		if (getUser != null) {
-			// 更改用户状态
+
 			String sql1 = "update user set state=? WHERE name=?";
-			userDao.update(sql1, 1, id);
+			userDao.update(sql1, 1, name);
 		}
+
 		// System.out.println("个性签名：" + getUser.getSignature());
 		return getUser;
+	}
+
+	public static void checkout(String name) {
+		System.out.println(name + "退出登录");
+		String sql1 = "update user set state=? WHERE name=?";
+		userDao.update(sql1, -1, name);
 	}
 
 	// @Test
@@ -41,13 +49,11 @@ public class ServerService {
 	}
 
 	// @Test
-	public void getLogin() {
-		String id = "jw";
-		String pwd = "991205";
-		String sql = "select * from user where name=? and pwd=?";
-		User user = userDao.get(sql, User.class, id, pwd);
-		System.out.println(user.getEmail());
-	}
+	/*
+	 * public static void getLogin(String name, String pwd) { String sql =
+	 * "select * from user where name=? and pwd=?"; User user = userDao.get(sql,
+	 * User.class, name, pwd); // System.out.println(user.getEmail()); }
+	 */
 
 	// @Test
 	// public void getRigester() {
@@ -60,10 +66,8 @@ public class ServerService {
 	// System.out.println(userDao.update(sql, "xx", "999999"));
 	// }
 	/// @Test
-	public static boolean getRigester(User user) {
+	public static boolean getRigester(String name, String pwd) {
 		//
-		String name = user.getName();
-		String pwd = user.getPwd();
 		// System.out.println("用户注册的姓名" + user.getPwd());
 		String sql = "select * from user ";
 		int size = userDao.query(sql, User.class).size();

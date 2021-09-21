@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 
 import Beans.User;
+import Tools.MsgTypes;
 import client.Control.Register;
 import client.frame.LoginFrame;
 import io.netty.bootstrap.Bootstrap;
@@ -90,7 +91,7 @@ public class LoginChatClient extends LoginFrame {
 		}
 	}
 
-	public void login() throws Exception {
+	public void login() {
 
 		// 获取用户名与密码
 		String name = textFieldUserName.getText();
@@ -109,11 +110,11 @@ public class LoginChatClient extends LoginFrame {
 			 * Message sendMsg = new Message(); sendMsg.setUser(user);
 			 */
 			// run(sendMsg);
-			String sendMsg = name + "#" + password;
+			String sendMsg = MsgTypes.MESSAGE_LOGIN_REQUEST + "#" + name + "#" + password;
 			System.out.println("应该发送消息" + sendMsg);
 			// channel.writeAndFlush(sendMsg);
 			// System.out.println("实际发送消息" + sendMsg);
-			run(sendMsg);
+			// run(sendMsg);
 
 		}
 

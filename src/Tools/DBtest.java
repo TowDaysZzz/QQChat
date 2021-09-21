@@ -1,6 +1,7 @@
 package Tools;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.Test;
 
@@ -33,10 +34,12 @@ public class DBtest {
 
 	@Test
 	public void getUser() {
+
 		String sql = "select * from user where name='jie'";
 		UserDao userDao = new UserDao();
 		User user = userDao.get(sql, User.class);
-
+		Scanner scanner = new Scanner(System.in);
+		scanner.nextInt();
 		System.out.println(user.getEmail());
 
 	}

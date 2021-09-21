@@ -28,7 +28,7 @@ public class ClientService {
 		try {
 			Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), 9999);
 			Message message = new Message();
-			message.setMsgType(MsgTypes.MESSAGE_LOGIN_);
+			message.setMsgType(MsgTypes.MESSAGE_LOGIN_REQUEST);
 			message.setUser(user);
 			// 注意in和out的顺序
 			out = new ObjectOutputStream(socket.getOutputStream());

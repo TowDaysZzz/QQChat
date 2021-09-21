@@ -1,12 +1,12 @@
 package server.handler;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Beans.User;
-import Tools.Message;
 import Tools.MsgTypes;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -49,13 +49,14 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 		System.out.println(channel.remoteAddress() + "加入聊天"); //
 		map.put(channel.hashCode(), channel);
 		Set<String> keys = jedis.keys("*");
-		System.out.println("step!!!!!");
+		System.out.println("##########遍历如下##########");
 		Iterator<String> iterator = keys.iterator();
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
 			// String value = jedis.get(key);
 			System.out.println(key);
 		}
+		System.out.println("##########遍历结束##########");
 
 	}
 
@@ -92,19 +93,32 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
 
 		// 获取到当前channel
+		/*
+		 * Channel channel = ctx.channel(); // 这时我们遍历channelGroup,
+		 * 根据不同的情况，回送不同的消息 System.out.println("msg:" + msg);
+		 * channel.writeAndFlush("pippppppp"); String strings[] =
+		 * msg.split("#"); String name = strings[0]; String pwd = strings[1];
+		 * String value = name + "#" + pwd; User user = new User(name, pwd);
+		 * User login = ServerService.getLogin((user)); if (login != null) {
+		 * jedis.lpush(name, channel.remoteAddress().toString());
+		 * channel.writeAndFlush("true"); }
+		 * 
+		 */
 		Channel channel = ctx.channel();
 		// 这时我们遍历channelGroup, 根据不同的情况，回送不同的消息
-		System.out.println("msg:" + msg);
-		channel.writeAndFlush("pippppppp");
-		String strings[] = msg.split("#");
-		String name = strings[0];
-		String pwd = strings[1];
-		String value = name + "#" + pwd;
-		User user = new User(name, pwd);
-		User login = ServerService.getLogin((user));
-		if (login != null) {
-			jedis.lpush(name, channel.remoteAddress().toString());
-			channel.writeAndFlush("true");
+		System.out.println("服务器收到的消息:" + msg);
+		String[] split = msg.split("#");
+		String flag = split[0];
+		switch (flag) {
+		case MsgTypes.MESSAGE_LOGIN_:
+			dealwithLogin(split, channel);
+			break;
+		case MsgTypes.MESSAGE_REGISTER_:
+			dealwithRegister(split, channel);
+			break;
+		case MsgTypes.MESSAGE_PRIVATE_CHAT:
+			dealwithPriChat(split);
+			break;
 		}
 
 		/*
@@ -121,12 +135,41 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 		 * 
 		 * break;
 		 * 
-		 * case MsgTypes.MESSAGE_PRIVATE_CHAT:
+		 * case MsgTypes.MESSAGE_PRIVATE_CHAT:d
 		 * 
 		 * break;
 		 * 
 		 * default: break; }
 		 */
+	}
+
+	private void dealwithPriChat(String[] split) {
+		// TODO Auto-generated method stub
+		String fromUser = split[1];
+		String toUser = split[2];
+		String string = jedis.get(toUser);
+		System.out.println(sdf.format(new Date()) + fromUser + "需要发送给：" + toUser + "------->" + string);
+
+	}
+
+	private void dealwithRegister(String[] msg, Channel channel) {
+		// TODO Auto-generated method stub
+		String name = msg[1];
+		String pwd = msg[2];
+		boolean rigester = ServerService.getRigester(name, pwd);
+		if (rigester) {
+			System.out.println(sdf.format(new Date()) + "注册成功");
+			String registerSuccess = MsgTypes.MESSAGE_REGISTER_SUCCESS + "#";
+			channel.writeAndFlush(registerSuccess);
+			System.out.println(sdf.format(new Date()) + "注册成功消息发送" + registerSuccess);
+
+			return;
+		} else {
+			System.out.println(sdf.format(new Date()) + "注册失败");
+			String registerFail = MsgTypes.MESSAGE_LOGIN_FAIL + "#";
+			channel.writeAndFlush(registerFail);
+			System.out.println(sdf.format(new Date()) + "注册成功消息发送" + registerFail);
+		}
 	}
 
 	@Override
@@ -135,25 +178,23 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 		ctx.close();
 	}
 
-	private void dealwithlogin(Message msg, Channel channel) {
-		User user = msg.getUser();
-		User loginUser = ServerService.getLogin((user));
-		Message sendback = new Message();
-		if (loginUser != null) {
-
-			sendback.setMsgType(MsgTypes.MESSAGE_LOGIN_SUCCESS);
-			sendback.setUser(loginUser);
-			channel.writeAndFlush(sendback);
-			System.out.println(loginUser.getName() + "用户登陆成功");
-			System.out.println("当前在线总人数为" + map.size());
-			map.put(loginUser.getId(), channel);
-			// map.size();
-		} else {
-			sendback.setMsgType(MsgTypes.MESSAGE_LOGIN_FAIL);
-			System.out.println("用户登陆失败，请重新登陆！！！");
-			channel.writeAndFlush(sendback);
+	private void dealwithLogin(String[] msg, Channel channel) {
+		String name = msg[1];
+		String pwd = msg[2];
+		User login = ServerService.getLogin(name, pwd);
+		if (login != null) {
+			System.out.println(sdf.format(new Date()) + "登陆成功");
+			String loginSuccess = MsgTypes.MESSAGE_LOGIN_SUCCESS + "#";
+			channel.writeAndFlush(loginSuccess);
+			System.out.println(sdf.format(new Date()) + "登陆成功消息发送" + loginSuccess);
+			jedis.lpush(name, channel.remoteAddress().toString());
+			return;
 		}
-
+		// 登陆失败
+		System.out.println(sdf.format(new Date()) + "登陆失败");
+		String loginFail = MsgTypes.MESSAGE_LOGIN_FAIL + "#";
+		channel.writeAndFlush(loginFail);
+		System.out.println(sdf.format(new Date()) + "登陆失败消息发送" + loginFail);
 	}
 
 }

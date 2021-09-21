@@ -12,6 +12,9 @@ import javax.sql.DataSource;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+/*
+ * 单例池
+ */
 public class DruidUtils {
 	private static DataSource dataSource = null;
 	static {
@@ -20,6 +23,10 @@ public class DruidUtils {
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("src//Tools//druid.properties"));
 			dataSource = DruidDataSourceFactory.createDataSource(properties);
+			// DataSource createDataSource =
+			// createDataSource =
+			// DruidDataSourceFactory.createDataSource(properties);
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
